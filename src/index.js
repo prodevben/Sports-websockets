@@ -1,6 +1,5 @@
 import express from "express";
-import { db } from "./db/client.js";
-import userRoutes from "./controllers/userController.js";
+import { matchRouter } from "./routes/matches.js";
 
 const app = express();
 const PORT = 8000;
@@ -8,13 +7,13 @@ const PORT = 8000;
 // JSON middleware
 app.use(express.json());
 
-// User routes
-app.use('/users', userRoutes);
 
 // Root route
 app.get('/', (req, res) => {
     res.json({ message: 'Hello from Express' });
 });
+
+app.use('/matches',matchRouter)
 
 // Start server and log URL
 app.listen(PORT, () => {
