@@ -22,25 +22,14 @@ export const matchIdParamSchema = z.object({
   id: z.coerce.number().int().positive(),
 });
 
-// Helper ISO 8601 regexp (UTC 'Z' format, allows fractional seconds)
-const iso8601Regex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$/;
-
 // Create match schema
 export const createMatchSchema = z
   .object({
     sport: z.string().min(1, { message: 'sport is required' }),
     homeTeam: z.string().min(1, { message: 'homeTeam is required' }),
     awayTeam: z.string().min(1, { message: 'awayTeam is required' }),
-    startTime: z
-      .string()
-      .refine((v) => iso8601Regex.test(v) && !Number.isNaN(Date.parse(v)), {
-        message: 'startTime must be a valid ISO 8601 string (UTC, e.g. 2023-01-01T00:00:00Z)',
-      }),
-    endTime: z
-      .string()
-      .refine((v) => iso8601Regex.test(v) && !Number.isNaN(Date.parse(v)), {
-        message: 'endTime must be a valid ISO 8601 string (UTC, e.g. 2023-01-01T01:00:00Z)',
-      }),
+    startTime: z.iso.datetime(),
+    endTime: z.iso.datetime(),
     homeScore: z
       .coerce.number()
       .int()
