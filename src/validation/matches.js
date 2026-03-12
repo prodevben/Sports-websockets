@@ -19,7 +19,7 @@ export const listMatchesQuerySchema = z.object({
 
 // Path params schema: id required and coerced to a positive integer
 export const matchIdParamSchema = z.object({
-  id: z.coerce.number().int().positive(),
+  matchId: z.coerce.number().int().positive(),
 });
 
 // Create match schema
